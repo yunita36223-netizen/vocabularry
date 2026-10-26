@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fun English Vocabulary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito', sans-serif; background: #fff8e7; color: #333; min-height: 100vh; }
+
+    /* Header */
+    .site-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+      padding: 14px 24px; background: #4f9dff; color: #fff; position: sticky; top: 0; z-index: 10; }
+    .brand { color: #fff; font-weight: 800; font-size: 1.3rem; text-decoration: none; cursor: pointer; }
+    .nav-list { display: flex; gap: 8px; list-style: none; flex-wrap: wrap; }
+    .nav-btn { border: none; background: transparent; color: #fff; font: inherit; font-weight: 700;
+      padding: 8px 16px; border-radius: 20px; cursor: pointer; }
+    .nav-btn:hover { background: rgba(255,255,255,.25); }
+    .nav-btn.is-active { background: #fff; color: #4f9dff; }
+
+    /* Pages */
+    main { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+    .page { display: none; }
+    .page.is-visible { display: block; animation: fade .3s ease; }
+    @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    /* Buttons */
+    .btn { border: 2px solid #4f9dff; font: inherit; font-weight: 800; padding: 12px 28px; border-radius: 30px; cursor: pointer; transition: transform .1s; }
+    .btn:hover { transform: scale(1.05); }
+    .btn-primary { background: #4f9dff; color: #fff; }
+    .btn-outline { background: #fff; color: #4f9dff; }
+
+    /* Home */
+    .hero { display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap; padding: 30px 0; }
+    .hero-text { flex: 1 1 320px; }
+    .hero-text h1 { font-size: 3rem; line-height: 1.1; color: #ff7a29; }
+    .subtitle { margin: 12px 0; color: #4f9dff; }
+    .hero-text p { margin-bottom: 20px; font-size: 1.1rem; }
+    .hero-illustration { flex: 1 1 260px; text-align: center; }
+    .big-emoji { font-size: 5rem; letter-spacing: 8px; }
+    .dots { margin: 16px 0; }
+    .dot { display: inline-block; width: 22px; height: 22px; border-radius: 50%; margin: 0 6px; }
+    .dot-yellow { background: #ffd23f; } .dot-green { background: #4cc97a; } .dot-orange { background: #ff7a29; }
+    figcaption { font-size: .9rem; color: #777; }
+
+    /* Kelompok */
+    .group-box { margin-top: 10px; background: #fff; border-left: 6px solid #ff7a29; border-radius: 16px;
+      padding: 16px 22px; box-shadow: 0 4px 12px rgba(0,0,0,.08); text-align: center; }
+    .group-name { font-size: 1.3rem; font-weight: 800; color: #ff7a29; margin-bottom: 4px; }
+    .group-info { font-weight: 700; color: #4f9dff; line-height: 1.5; }
+
+    /* Tujuan */
+    .goal-list { list-style: none; display: grid; gap: 14px; margin-top: 18px; counter-reset: goal; }
+    .goal-item { counter-increment: goal; display: flex; align-items: center; gap: 16px; background: #fff;
+      border-radius: 18px; padding: 16px 20px; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+    .goal-item::before { content: counter(goal); flex: 0 0 42px; height: 42px; border-radius: 50%; background: #ffd23f;
+      color: #ff7a29; font-weight: 800; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; }
+    .goal-icon { font-size: 2rem; }
+    .goal-text { flex: 1; font-weight: 600; }
+    .goal-cta { text-align: center; margin-top: 24px; }
+
+    /* Vocabulary */
+    .page-title { text-align: center; color: #ff7a29; font-size: 2rem; }
+    .page-info { text-align: center; margin: 8px 0 18px; color: #666; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+    .card { background: #fff; border-radius: 18px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+    .card .emoji { font-size: 3.2rem; }
+    .card .en { font-size: 1.3rem; font-weight: 800; color: #4f9dff; margin-top: 8px; }
+    .card .id { color: #666; }
+    .speak { margin-top: 10px; border: none; background: #ffd23f; border-radius: 20px; padding: 6px 14px; font: inherit; font-weight: 700; cursor: pointer; }
+    .pager { display: flex; justify-content: center; gap: 14px; margin-top: 24px; flex-wrap: wrap; }
+
+    /* Quiz / Practice / Game */
+    .quiz-box, .result-box { background: #fff; border-radius: 22px; padding: 28px; box-shadow: 0 4px 14px rgba(0,0,0,.08); text-align: center; }
+    .quiz-title { color: #ff7a29; margin-bottom: 10px; }
+    .quiz-title-big { font-size: 2rem; }
+    .progress-wrap { margin-bottom: 14px; text-align: left; }
+    .progress-text { font-weight: 700; color: #666; }
+    .progress { height: 12px; background: #e6eefc; border-radius: 10px; overflow: hidden; margin-top: 6px; }
+    .progress-bar { height: 100%; width: 0; background: #4cc97a; transition: width .3s; }
+    .question-card { background: #f3f8ff; border-radius: 16px; padding: 20px; margin: 16px 0; }
+    .img-small { font-size: 4.5rem; }
+    .question-text { font-size: 1.3rem; font-weight: 700; }
+    .options { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .option { border: 2px solid #cfe0ff; background: #fff; border-radius: 14px; padding: 14px; font: inherit; font-weight: 700; cursor: pointer; }
+    .option:hover:not(:disabled) { background: #eaf2ff; }
+    .option.correct { background: #4cc97a; color: #fff; border-color: #4cc97a; }
+    .option.wrong { background: #ff5d5d; color: #fff; border-color: #ff5d5d; }
+    .feedback { margin-top: 16px; font-weight: 800; font-size: 1.1rem; }
+    .btn-next { margin-top: 18px; }
+
+    /* Game */
+    .match-board { display: flex; gap: 20px; justify-content: center; margin: 16px 0; }
+    .match-col { list-style: none; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+    .match-item { border: 2px solid #cfe0ff; background: #fff; border-radius: 14px; padding: 12px; font-weight: 700; cursor: pointer; user-select: none; }
+    .match-item:hover { background: #eaf2ff; }
+    .match-item.selected { background: #ffd23f; border-color: #ffd23f; }
+    .match-item.matched { background: #4cc97a; color: #fff; border-color: #4cc97a; cursor: default; pointer-events: none; }
+    .match-item.shake { animation: shake .4s; background: #ff5d5d; color: #fff; }
+    @keyframes shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+    /* Result */
+    .score-circle { width: 130px; height: 130px; border-radius: 50%; background: #ffd23f; color: #ff7a29;
+      font-size: 3rem; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    .score-line { font-size: 1.3rem; margin: 10px 0; }
+    .result-box p { margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="brand" data-target="home">Fun English Vocabulary</a>
+    <nav aria-label="Navigasi utama">
+      <ul class="nav-list">
+        <li><button class="nav-btn is-active" data-target="home">Home</button></li>
+        <li><button class="nav-btn" data-target="tujuan">Tujuan</button></li>
+        <li><button class="nav-btn" data-target="vocabulary">Vocabulary</button></li>
+        <li><button class="nav-btn" data-target="practice">Practice</button></li>
+        <li><button class="nav-btn" data-target="game">Game</button></li>
+        <li><button class="nav-btn" data-target="quiz">Quiz</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- HOME -->
+    <section id="home" class="page is-visible">
+      <div class="hero">
+        <div class="hero-text">
+          <h1>Let's Learn <br>English!</h1>
+          <h2 class="subtitle">Daily Activities Vocabulary</h2>
+          <p>Learn new words, practice, play games, and test your knowledge!</p>
+          <button class="btn btn-primary" data-target="vocabulary">Start Learning</button>
+        </div>
+        <figure class="hero-illustration">
+          <div class="big-emoji" aria-hidden="true">🧒📚🪥</div>
+          <div class="dots" aria-hidden="true">
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+            <span class="dot dot-orange"></span>
+          </div>
+          <figcaption>Ilustrasi anak melakukan aktivitas sehari-hari</figcaption>
+        </figure>
+      </div>
+
+      <div class="group-box">
+        <p class="group-name">Kelompok 1</p>
+        <p class="group-info">
+          Prodi Teknologi Pendidikan<br>
+          Fakultas Keguruan dan Ilmu Pendidikan<br>
+          Universitas Muhammadiyah Sidenreng Rappang
+        </p>
+      </div>
+    </section>
+
+    <!-- TUJUAN -->
+    <section id="tujuan" class="page">
+      <h2 class="page-title">Tujuan Pembelajaran</h2>
+      <p class="page-info">Setelah belajar dengan media ini, kamu diharapkan dapat:</p>
+      <ol class="goal-list">
+        <li class="goal-item">
+          <span class="goal-icon" aria-hidden="true">📝</span>
+          <span class="goal-text">Mengenal dan menyebutkan kosakata bahasa Inggris tentang aktivitas sehari-hari, seperti wake up, brush teeth, dan go to school.</span>
+        </li>
+        <li class="goal-item">
+          <span class="goal-icon" aria-hidden="true">🔊</span>
+          <span class="goal-text">Melafalkan kosakata bahasa Inggris dengan benar dengan bantuan fitur Listen.</span>
+        </li>
+        <li class="goal-item">
+          <span class="goal-icon" aria-hidden="true">🔄</span>
+          <span class="goal-text">Memahami arti kosakata dari bahasa Inggris ke bahasa Indonesia dan sebaliknya.</span>
+        </li>
+        <li class="goal-item">
+          <span class="goal-icon" aria-hidden="true">🖼️</span>
+          <span class="goal-text">Mencocokkan gambar atau situasi dengan aktivitas yang tepat dalam bahasa Inggris.</span>
+        </li>
+        <li class="goal-item">
+          <span class="goal-icon" aria-hidden="true">🎮</span>
+          <span class="goal-text">Menggunakan kosakata yang telah dipelajari dalam latihan, permainan, dan kuis dengan percaya diri.</span>
+        </li>
+        <li class="goal-item">
+          <span class="goal-icon" aria-hidden="true">🌟</span>
+          <span class="goal-text">Tumbuh minat dan semangat untuk terus belajar bahasa Inggris dengan cara yang menyenangkan.</span>
+        </li>
+      </ol>
+      <div class="goal-cta">
+        <button class="btn btn-primary" data-target="vocabulary">Mulai Belajar Kosakata</button>
+      </div>
+    </section>
+
+    <!-- VOCABULARY -->
+    <section id="vocabulary" class="page">
+      <h2 class="page-title">Daily Activities Vocabulary</h2>
+      <p class="page-info" id="vocab-info">Page 1 of 2</p>
+      <div class="card-grid" id="vocab-grid"></div>
+      <div class="pager">
+        <button class="btn btn-outline" id="vocab-back">Back</button>
+        <button class="btn btn-primary" id="vocab-next">Next</button>
+      </div>
+    </section>
+
+    <!-- PRACTICE -->
+    <section id="practice" class="page">
+      <div class="quiz-box">
+        <div class="progress-wrap">
+          <span class="progress-text" id="practice-count">Question 1/4</span>
+          <div class="progress"><div class="progress-bar" id="practice-bar"></div></div>
+        </div>
+        <h2 class="quiz-title">Let's Practice!</h2>
+        <div class="question-card">
+          <div class="img-small" id="practice-media" aria-hidden="true"></div>
+          <p class="question-text" id="practice-question"></p>
+        </div>
+        <div class="options" id="practice-options"></div>
+        <p class="feedback" id="practice-feedback" role="status" hidden></p>
+        <button class="btn btn-primary btn-next" id="practice-next" hidden>Next</button>
+      </div>
+    </section>
+
+    <!-- GAME -->
+    <section id="game" class="page">
+      <div class="quiz-box">
+        <h2 class="quiz-title">Match the Words!</h2>
+        <p class="page-info">Klik kata Inggris, lalu klik artinya dalam bahasa Indonesia.</p>
+        <div class="match-board">
+          <ul class="match-col" id="game-en"></ul>
+          <ul class="match-col" id="game-id"></ul>
+        </div>
+        <p class="feedback" id="game-feedback" role="status" hidden></p>
+        <button class="btn btn-outline btn-next" id="game-restart">Play Again</button>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quiz" class="page">
+      <div class="quiz-box">
+        <div class="progress-wrap">
+          <span class="progress-text" id="quiz-count">Question 1/5</span>
+          <div class="progress"><div class="progress-bar" id="quiz-bar"></div></div>
+        </div>
+        <h2 class="quiz-title quiz-title-big">Final Quiz</h2>
+        <p class="page-info">Choose the correct answer. Let's see how much you have learned!</p>
+        <div class="question-card">
+          <p class="question-text" id="quiz-question"></p>
+        </div>
+        <div class="options" id="quiz-options"></div>
+      </div>
+    </section>
+
+    <!-- RESULT -->
+    <section id="result" class="page">
+      <div class="result-box">
+        <div class="score-circle" id="result-score">0</div>
+        <h2 class="quiz-title quiz-title-big">Quiz Completed!</h2>
+        <p class="score-line">Your Score: <strong id="result-score-text">0</strong></p>
+        <p>Great job! You have learned many new English words.</p>
+        <p>Keep practicing your English!</p>
+        <div class="pager">
+          <button class="btn btn-outline" data-target="vocabulary">Review Material</button>
+          <button class="btn btn-primary" data-target="home">Back to Home</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    /* ================= DATA ================= */
+    const WORDS = [
+      { emoji: '⏰', en: 'Wake up',        id: 'Bangun tidur' },
+      { emoji: '🪥', en: 'Brush teeth',    id: 'Menyikat gigi' },
+      { emoji: '🛁', en: 'Take a bath',    id: 'Mandi' },
+      { emoji: '🍳', en: 'Eat breakfast',  id: 'Sarapan' },
+      { emoji: '🏫', en: 'Go to school',   id: 'Pergi ke sekolah' },
+      { emoji: '📖', en: 'Study',          id: 'Belajar' },
+      { emoji: '⚽', en: 'Play',           id: 'Bermain' },
+      { emoji: '🍱', en: 'Eat lunch',      id: 'Makan siang' },
+      { emoji: '✏️', en: 'Do homework',    id: 'Mengerjakan PR' },
+      { emoji: '📺', en: 'Watch TV',       id: 'Menonton TV' },
+      { emoji: '🍽️', en: 'Have dinner',    id: 'Makan malam' },
+      { emoji: '🛏️', en: 'Go to bed',      id: 'Tidur' }
+    ];
+
+    const QUIZ = [
+      { q: 'What do you do in the morning when the alarm rings?', options: ['Wake up', 'Go to bed', 'Have dinner'], answer: 'Wake up' },
+      { q: 'Apa bahasa Inggris dari "Menyikat gigi"?', options: ['Take a bath', 'Brush teeth', 'Study'], answer: 'Brush teeth' },
+      { q: 'You eat food at 7 AM. It is...', options: ['Eat breakfast', 'Have dinner', 'Eat lunch'], answer: 'Eat breakfast' },
+      { q: 'Apa arti "Do homework"?', options: ['Bermain', 'Menonton TV', 'Mengerjakan PR'], answer: 'Mengerjakan PR' },
+      { q: 'Before sleeping at night, you...', options: ['Go to bed', 'Go to school', 'Eat breakfast'], answer: 'Go to bed' }
+    ];
+
+    /* ================= HELPERS ================= */
+    const $ = (id) => document.getElementById(id);
+    const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
+
+    /* ================= NAVIGATION ================= */
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.toggle('is-visible', p.id === id));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('is-active', b.dataset.target === id));
+      window.scrollTo(0, 0);
+      if (id === 'practice') startPractice();
+      if (id === 'game') startGame();
+      if (id === 'quiz') startQuiz();
+    }
+    document.querySelectorAll('[data-target]').forEach(el =>
+      el.addEventListener('click', () => showPage(el.dataset.target)));
+
+    /* ================= VOCABULARY ================= */
+    const PER_PAGE = 6;
+    let vocabPage = 0;
+    const totalVocabPages = Math.ceil(WORDS.length / PER_PAGE);
+
+    function speak(text) {
+      if (!('speechSynthesis' in window)) return;
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      speechSynthesis.cancel();
+      speechSynthesis.speak(u);
+    }
+
+    function renderVocab() {
+      const grid = $('vocab-grid');
+      grid.innerHTML = '';
+      WORDS.slice(vocabPage * PER_PAGE, (vocabPage + 1) * PER_PAGE).forEach(w => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="emoji">${w.emoji}</div>
+          <div class="en">${w.en}</div>
+          <div class="id">${w.id}</div>
+          <button class="speak">🔊 Listen</button>`;
+        card.querySelector('.speak').addEventListener('click', () => speak(w.en));
+        grid.appendChild(card);
+      });
+      $('vocab-info').textContent = `Page ${vocabPage + 1} of ${totalVocabPages}`;
+      $('vocab-back').disabled = vocabPage === 0;
+      $('vocab-next').disabled = vocabPage === totalVocabPages - 1;
+      $('vocab-back').style.opacity = vocabPage === 0 ? .4 : 1;
+      $('vocab-next').style.opacity = vocabPage === totalVocabPages - 1 ? .4 : 1;
+    }
+    $('vocab-back').addEventListener('click', () => { if (vocabPage > 0) { vocabPage--; renderVocab(); } });
+    $('vocab-next').addEventListener('click', () => { if (vocabPage < totalVocabPages - 1) { vocabPage++; renderVocab(); } });
+
+    /* ================= PRACTICE ================= */
+    const PRACTICE_TOTAL = 4;
+    let practiceItems = [], practiceIndex = 0;
+
+    function startPractice() {
+      practiceItems = shuffle(WORDS).slice(0, PRACTICE_TOTAL);
+      practiceIndex = 0;
+      renderPractice();
+    }
+
+    function renderPractice() {
+      const item = practiceItems[practiceIndex];
+      $('practice-count').textContent = `Question ${practiceIndex + 1}/${PRACTICE_TOTAL}`;
+      $('practice-bar').style.width = ((practiceIndex + 1) / PRACTICE_TOTAL * 100) + '%';
+      $('practice-media').textContent = item.emoji;
+      $('practice-question').textContent = 'What is this activity in English?';
+      $('practice-feedback').hidden = true;
+      $('practice-next').hidden = true;
+
+      const wrongs = shuffle(WORDS.filter(w => w.en !== item.en)).slice(0, 2).map(w => w.en);
+      const box = $('practice-options');
+      box.innerHTML = '';
+      shuffle([item.en, ...wrongs]).forEach(opt => {
+        const b = document.createElement('button');
+        b.className = 'option';
+        b.textContent = opt;
+        b.addEventListener('click', () => answerPractice(b, opt, item.en));
+        box.appendChild(b);
+      });
+    }
+
+    function answerPractice(btn, chosen, correct) {
+      document.querySelectorAll('#practice-options .option').forEach(b => {
+        b.disabled = true;
+        if (b.textContent === correct) b.classList.add('correct');
+      });
+      const fb = $('practice-feedback');
+      if (chosen === correct) {
+        fb.textContent = '🎉 Correct! Great job!';
+      } else {
+        btn.classList.add('wrong');
+        fb.textContent = `❌ Not quite. The answer is "${correct}".`;
+      }
+      fb.hidden = false;
+      $('practice-next').textContent = practiceIndex === PRACTICE_TOTAL - 1 ? 'Finish' : 'Next';
+      $('practice-next').hidden = false;
+    }
+
+    $('practice-next').addEventListener('click', () => {
+      if (practiceIndex < PRACTICE_TOTAL - 1) { practiceIndex++; renderPractice(); }
+      else showPage('game');
+    });
+
+    /* ================= GAME ================= */
+    let selectedEn = null, matchedCount = 0;
+    const GAME_PAIRS = 5;
+
+    function startGame() {
+      const pairs = shuffle(WORDS).slice(0, GAME_PAIRS);
+      selectedEn = null;
+      matchedCount = 0;
+      $('game-feedback').hidden = true;
+
+      const enList = $('game-en'), idList = $('game-id');
+      enList.innerHTML = ''; idList.innerHTML = '';
+
+      shuffle(pairs).forEach(p => enList.appendChild(makeMatchItem(p.en, p.en, 'en')));
+      shuffle(pairs).forEach(p => idList.appendChild(makeMatchItem(p.id, p.en, 'id')));
+    }
+
+    function makeMatchItem(text, key, side) {
+      const li = document.createElement('li');
+      li.className = 'match-item';
+      li.textContent = text;
+      li.dataset.key = key;
+      li.addEventListener('click', () => onMatchClick(li, side));
+      return li;
+    }
+
+    function onMatchClick(li, side) {
+      if (side === 'en') {
+        document.querySelectorAll('#game-en .match-item').forEach(x => x.classList.remove('selected'));
+        li.classList.add('selected');
+        selectedEn = li;
+        return;
+      }
+      if (!selectedEn) {
+        const fb = $('game-feedback');
+        fb.textContent = 'Pilih kata Inggris dulu ya 🙂';
+        fb.hidden = false;
+        return;
+      }
+      if (selectedEn.dataset.key === li.dataset.key) {
+        selectedEn.classList.remove('selected');
+        selectedEn.classList.add('matched');
+        li.classList.add('matched');
+        selectedEn = null;
+        matchedCount++;
+        const fb = $('game-feedback');
+        fb.hidden = false;
+        fb.textContent = matchedCount === GAME_PAIRS ? '🏆 Amazing! All words matched!' : '✅ Correct!';
+      } else {
+        li.classList.add('shake');
+        setTimeout(() => li.classList.remove('shake'), 450);
+        const fb = $('game-feedback');
+        fb.textContent = '❌ Try again!';
+        fb.hidden = false;
+      }
+    }
+    $('game-restart').addEventListener('click', startGame);
+
+    /* ================= QUIZ ================= */
+    let quizIndex = 0, quizScore = 0;
+
+    function startQuiz() {
+      quizIndex = 0;
+      quizScore = 0;
+      renderQuiz();
+    }
+
+    function renderQuiz() {
+      const item = QUIZ[quizIndex];
+      $('quiz-count').textContent = `Question ${quizIndex + 1}/${QUIZ.length}`;
+      $('quiz-bar').style.width = ((quizIndex + 1) / QUIZ.length * 100) + '%';
+      $('quiz-question').textContent = item.q;
+      const box = $('quiz-options');
+      box.innerHTML = '';
+      shuffle(item.options).forEach(opt => {
+        const b = document.createElement('button');
+        b.className = 'option';
+        b.textContent = opt;
+        b.addEventListener('click', () => answerQuiz(b, opt, item.answer));
+        box.appendChild(b);
+      });
+    }
+
+    function answerQuiz(btn, chosen, correct) {
+      document.querySelectorAll('#quiz-options .option').forEach(b => {
+        b.disabled = true;
+        if (b.textContent === correct) b.classList.add('correct');
+      });
+      if (chosen === correct) quizScore++;
+      else btn.classList.add('wrong');
+
+      setTimeout(() => {
+        if (quizIndex < QUIZ.length - 1) { quizIndex++; renderQuiz(); }
+        else showResult();
+      }, 900);
+    }
+
+    function showResult() {
+      const score = Math.round(quizScore / QUIZ.length * 100);
+      $('result-score').textContent = score;
+      $('result-score-text').textContent = `${score} (${quizScore}/${QUIZ.length} benar)`;
+      showPage('result');
+    }
+
+    /* ================= INIT ================= */
+    renderVocab();
+  </script>
+  <footer class="site-footer">
+      <p>Universitas Muhammadiyah Sidenreng Rappang</p>
+      <p>Fakultas Keguruan dan Ilmu Pendidikan</p>
+      <p>Program Studi Teknologi Pendidikan</p>
+      <p>Kelompok 1: Yunita, Iis Paramita.A, Astriyanti, Fauzan Mardatullah</p>
+      <p>Tahun 2025/2026</small></p>
+    </footer>
+  </div>
+</body>
+</html>
+</body>
+</html>
+
+
